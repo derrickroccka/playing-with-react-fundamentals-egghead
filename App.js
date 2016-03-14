@@ -25,21 +25,28 @@ class App extends React.Component {
 			cat: 0,
 			red: 0,
 			green: 0,
-			blue: 0
-		}
+			blue: 0,
+			val: 9
+		};
 		this.update = this.update.bind(this)
 	}
+
 	//Update is called after action on the DOM
 	update(e){
 		this.setState({
 			txt: e.target.value,
 			red: ReactDOM.findDOMNode(this.refs.red).value,
 			green: ReactDOM.findDOMNode(this.refs.green).value,
-			blue: ReactDOM.findDOMNode(this.refs.blue).value
+			blue: ReactDOM.findDOMNode(this.refs.blue).value,
+			val: this.state.val + 1
 		})
+	}
+	componentWillMount(){
+		console.log('mounting');
 	}
 	//This method will render our component
 	render(){
+		console.log('rendering!!!');
 		//stores txt prop value
 		let txt = this.props.txt;
 		//Its good to wrap elements into parentheses
@@ -82,8 +89,17 @@ class App extends React.Component {
 				{/* Accessing child properties (8th video) starts with this button
 					Similar to Angular transclusion*/}
 				<button> I <Heart/> React</button>
+				<hr/>
+				{/* lifecycle mounting basics (9th video)*/}
+				<button onClick={this.update} value="lol">{this.state.val}</button>
 			</div>
 		)
+	}
+	componentDidMount(){
+		console.log('mounted');
+	}
+	componentWillUnmount(){
+		console.log('bye!');
 	}
 }
 
@@ -188,6 +204,42 @@ class Button extends React.Component {
 	}
 }
 
+/////////////////////////////////////////////////////
+/**
+ *
+ * Component lifecycle mounting basics (9th video)
+ *
+ */
+/////////////////////////////////////////////////////
 
-//Exposing the App component
-export default App
+/**
+ * This will create a wrapper that will contain the
+ * App element inside. We are focused on mounting
+ * and unmounting elements, so the point is that with
+ * mount/unmount buttons, the app is appearing and
+ * disappearing in the screen.
+ *
+ */
+class Wrapper extends React.Component {
+	constructor(){
+		super();
+	}
+	mount(){
+		ReactDOM.render(<App />, document.getElementById('a'));
+	}
+	unmount(){
+		ReactDOM.unmountComponentAtNode(document.getElementById('a'));
+	}
+	render(){
+		return (
+			<div>
+				<button onClick={this.mount.bind(this)}>Mount</button>
+				<button onClick={this.unmount.bind(this)}>Unmount</button>
+				<div id="a"></div>
+			</div>
+		)
+	}
+}
+export default Wrapper
+//Exposing the App component (this was commented on the 9th video and changed by the line above
+//export default App
