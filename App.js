@@ -43,6 +43,16 @@ class App extends React.Component {
 	}
 	componentWillMount(){
 		console.log('mounting');
+		/////////////////////////////////////////////////////
+		/**
+		 *
+		 * 10th video Component lifecycle mounting usage
+		 * Starts with this line
+		 *
+		 */
+			/////////////////////////////////////////////////////
+		this.setState({m:2});
+
 	}
 	//This method will render our component
 	render(){
@@ -92,14 +102,21 @@ class App extends React.Component {
 				<hr/>
 				{/* lifecycle mounting basics (9th video)*/}
 				<button onClick={this.update} value="lol">{this.state.val}</button>
+				<hr/>
+				{/* lifecycle mount (10th video)*/}
+				<button onClick={this.update} value="lol">{this.state.val*this.state.m}</button>
 			</div>
 		)
 	}
 	componentDidMount(){
 		console.log('mounted');
+		//this will call update once the component is mounted every 0.5s
+		this.inc = setInterval(this.update, 500);
 	}
 	componentWillUnmount(){
 		console.log('bye!');
+		//clearing the interval set above
+		clearInterval(this.inc);
 	}
 }
 
