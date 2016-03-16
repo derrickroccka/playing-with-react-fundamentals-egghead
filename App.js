@@ -110,12 +110,14 @@ class App extends React.Component {
 	}
 	componentDidMount(){
 		console.log('mounted');
-		//this will call update once the component is mounted every 0.5s
+		//this will call update once the component is mounted every 0.5s (10th video)
 		this.inc = setInterval(this.update, 500);
 	}
 	componentWillUnmount(){
 		console.log('bye!');
-		//clearing the interval set above
+		//clearing the interval set above (10th video)
+		//this is done to prevent the error that is shown when we unmount
+		//and call something that is unmounted
 		clearInterval(this.inc);
 	}
 }
