@@ -26,7 +26,9 @@ class App extends React.Component {
 			red: 0,
 			green: 0,
 			blue: 0,
-			val: 9
+			val: 9,
+			//added in the 11th videos
+			increasing: false
 		};
 		this.update = this.update.bind(this)
 	}
@@ -39,7 +41,12 @@ class App extends React.Component {
 			green: ReactDOM.findDOMNode(this.refs.green).value,
 			blue: ReactDOM.findDOMNode(this.refs.blue).value,
 			val: this.state.val + 1
-		})
+		});
+		//added in 11th video
+		ReactDOM.render(
+			<App val={this.props.val+1} />,
+			document.getElementById('app')
+		)
 	}
 	componentWillMount(){
 		console.log('mounting');
@@ -57,6 +64,7 @@ class App extends React.Component {
 	//This method will render our component
 	render(){
 		console.log('rendering!!!');
+		console.log('increasing!!!',this.state.increasing);
 		//stores txt prop value
 		let txt = this.props.txt;
 		//Its good to wrap elements into parentheses
@@ -105,6 +113,9 @@ class App extends React.Component {
 				<hr/>
 				{/* lifecycle mount (10th video)*/}
 				<button onClick={this.update} value="lol">{this.state.val*this.state.m}</button>
+				<hr/>
+				{/* lifecycle update method (11th video)*/}
+				<button onClick={this.update} value="lol">{this.props.val}</button>
 			</div>
 		)
 	}
@@ -120,6 +131,18 @@ class App extends React.Component {
 		//and call something that is unmounted
 		clearInterval(this.inc);
 	}
+
+	componentWillReceiveProps(nextProps){
+		this.setState({increasing: nextProps.val > this.props.val});
+	}
+	//only updates the component if a condition is acomplished (11th video)
+	shouldComponentUpdate(nextProps, nextState){
+		return nextProps.val % 5 === 0;
+	}
+	//says if the component has been updated and the previous value of the property (11th video)
+	componentDidUpdate(prevProps, prevState){
+		console.log('prevProps', prevProps);
+	}
 }
 
 //Types of the properties of the element that we're working at
@@ -130,7 +153,8 @@ App.propTypes = {
 
 //Default values for props. (If not speficied in the element)
 App.defaultProps = {
-	txt: 'Default txt'
+	txt: 'Default txt',
+	val: 0
 }
 
 /////////////////////////////////////////////////////
