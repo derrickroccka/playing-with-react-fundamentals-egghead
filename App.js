@@ -86,10 +86,10 @@ class App extends React.Component {
 		return (
 			<div>
 				<ButtonMixed txt="Button" />
+				<LabelMixed txt="Label - 0" />
 			</div>
 		);
 	}
 }
 
-App.defaultProps = {txt:'button'};
-
+export default App
